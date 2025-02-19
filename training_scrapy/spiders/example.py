@@ -1,6 +1,11 @@
 import scrapy
 
 
+class QuoteItem(scrapy.Item):
+    text = scrapy.Field()
+    author = scrapy.Field()
+    tags = scrapy.Field()
+
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     allowed_domains = ["example.com"]
@@ -8,12 +13,12 @@ class QuotesSpider(scrapy.Spider):
 
     def parse(self, response):
         for quote in response.css('div.quote'):
-            # Заменили return на yield.
-            yield {
+            data = {
                 'text': quote.css('span.text::text').get(),
                 'author': quote.css('small.author::text').get(),
                 'tags': quote.css('a.tag::text').getall(),
             }
+            yield QuoteItem(data)
 
         # По CSS-селектору ищем ссылку на следующую страницу.
         next_page = response.css('li.next a::attr(href)').get()
