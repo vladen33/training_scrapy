@@ -90,3 +90,16 @@ ROBOTSTXT_OBEY = True
 # Set settings whose default value is deprecated to a future-proof value
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+FEEDS = {
+    'quotes_text.csv': {
+        'format': 'csv',
+        'fields': ['text', 'tags'],
+        'overwrite': True
+    },
+    'quotes_author.csv': {
+        'format': 'csv',
+        'fields': ['author'],
+        'overwrite': True
+    }
+}
